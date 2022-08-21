@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
+#include "GameFramework/Pawn.h"
 #include "MyPawn.h"
+#include "GameFramework/Actor.h"
 
 // Sets default values
 AMyPawn::AMyPawn()
@@ -18,6 +20,22 @@ void AMyPawn::BeginPlay()
 	
 }
 
+void AMyPawn::MoveForward(float Value)
+{
+	if (Value != 0.0f)
+	{
+		AddMovementInput(GetActorForwardVector(), Value);
+	}
+}
+
+void AMyPawn::MoveRight(float Value)
+{
+	if (Value != 0.0f)
+	{
+		AddMovementInput(GetActorRightVector(), Value);
+	}
+}
+
 // Called every frame
 void AMyPawn::Tick(float DeltaTime)
 {
@@ -30,5 +48,9 @@ void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	PlayerInputComponent->BindAxis("Avancer", this, &AMyPawn::MoveForward);
+	PlayerInputComponent->BindAxis("Gauche", this, &AMyPawn::MoveRight);
 }
+
+
 
